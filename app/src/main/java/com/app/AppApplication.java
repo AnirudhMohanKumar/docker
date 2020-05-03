@@ -3,6 +3,7 @@ package com.app;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AppApplication {
 
+	@Value(value = "${spring.application.name}")
+	private String appname;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
 	}
@@ -21,12 +25,12 @@ public class AppApplication {
 	@GetMapping("/")
 	public String getApp() throws UnknownHostException {
 		
-		return "App says \"Hello!\" to you. # " + InetAddress.getLocalHost().getHostName();
+		return "Appname - "+appname+" . # " + InetAddress.getLocalHost().getHostName();
 	}
 	
 	@GetMapping("/health")
-	public String getFromApp() {
+	public String getFromApp() throws UnknownHostException {
 		
-		return "App says \"Hello!\" to web and to you.";
+		return "Appname - "+appname+" . # " + InetAddress.getLocalHost().getHostName();
 	}
 }

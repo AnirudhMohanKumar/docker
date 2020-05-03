@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -22,6 +23,9 @@ public class WebApplication {
 	@Autowired
 	private WebService service;
 	
+	@Value(value = "${spring.application.name}")
+	private String appname;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(WebApplication.class, args);
 	}
@@ -29,7 +33,7 @@ public class WebApplication {
 	@GetMapping("/")
 	public String getFromApp() throws UnknownHostException {
 		
-		return service.getFromApp() + " # " + InetAddress.getLocalHost().getHostName();
+		return "Appname - " + appname + ". # " + InetAddress.getLocalHost().getHostName() + "<br>" + service.getFromApp();
 	}
 	
 	@Bean
