@@ -1,5 +1,8 @@
 package com.web;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,9 +27,9 @@ public class WebApplication {
 	}
 	
 	@GetMapping("/")
-	public String getFromApp() {
+	public String getFromApp() throws UnknownHostException {
 		
-		return service.getFromApp();
+		return service.getFromApp() + " # " + InetAddress.getLocalHost().getHostName();
 	}
 	
 	@Bean

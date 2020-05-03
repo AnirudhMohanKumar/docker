@@ -1,5 +1,8 @@
 package com.app;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -16,14 +19,14 @@ public class AppApplication {
 	}
 
 	@GetMapping("/")
-	public String getApp() {
+	public String getApp() throws UnknownHostException {
 		
-		return "App says \"Hello!\" to you";
+		return "App says \"Hello!\" to you. # " + InetAddress.getLocalHost().getHostName();
 	}
 	
 	@GetMapping("/health")
 	public String getFromApp() {
 		
-		return "App says \"Hello!\" to web and to you";
+		return "App says \"Hello!\" to web and to you.";
 	}
 }
