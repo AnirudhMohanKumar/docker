@@ -1,24 +1,24 @@
 package com.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+@EnableFeignClients
+@EnableEurekaClient
 @SpringBootApplication
 @RestController
 public class WebApplication {
 	
 	@Autowired
-	private RestTemplate restTemplate;
+	private WebService service;
 	
-	@Value("${app.url}")
-	private String appUrl;
-
 	public static void main(String[] args) {
 		SpringApplication.run(WebApplication.class, args);
 	}
@@ -26,7 +26,7 @@ public class WebApplication {
 	@GetMapping("/")
 	public String getFromApp() {
 		
-		return restTemplate.getForObject(appUrl, String.class);
+		return service.getFromApp();
 	}
 	
 	@Bean

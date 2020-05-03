@@ -1,0 +1,28 @@
+server:
+  port: 9999
+  
+spring:
+  application:
+    name: apigateway
+    
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+      
+zuul:
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  ignored-services: '*'
+  routes:
+    web-service:
+      path: /web/**
+      service-id: web
+      strip-prefix: true
+    app-service:
+      path: /app/**
+      service-id: app
+      strip-prefix: true
