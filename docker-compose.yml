@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  eureka:
+    build: ./eureka
+    command: nohup java -jar app.jar &
+    ports:
+      - "8888:8888"
+    networks:
+      - back-tier
+
+  app:
+    build: ./app
+    depends_on:
+      - "eureka"
+    command: nohup java -jar app.jar &
+    ports:
+      - "9005:9005"
+    networks:
+      - back-tier
+
+  web:
+    build: ./web
+    depends_on:
+      - "eureka"
+      - "app"
+    command: nohup java -jar app.jar &
+    ports:
+      - "9000:9000"
+    networks:
+      - front-tier
+
+  apigateway:
+    build: ./apigateway
+    depends_on:
+      - "eureka"
+      - "app"
+      - "web"
+    command: nohup java -jar app.jar &
+    ports:
+      - "9999:9999"
+    networks:
+      - front-tier
+
+networks:
+  front-tier:
+  back-tier:
