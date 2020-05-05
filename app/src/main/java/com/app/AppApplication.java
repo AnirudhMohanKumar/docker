@@ -1,6 +1,5 @@
 package com.app;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +24,14 @@ public class AppApplication {
 	@GetMapping("/")
 	public String getApp() throws UnknownHostException {
 		
-		return "Appname - "+appname+" . # " + InetAddress.getLocalHost().getHostName();
+		return "Appname - "+appname;
+				//+" . # " + InetAddress.getLocalHost().getHostName();
 	}
 	
 	@GetMapping("/health")
 	public String getFromApp() throws UnknownHostException {
 		
-		return "Appname - "+appname+" . # " + InetAddress.getLocalHost().getHostName();
+		return "Appname - "+appname;
+				//+" . # " + InetAddress.getLocalHost().getHostName();
 	}
 }
